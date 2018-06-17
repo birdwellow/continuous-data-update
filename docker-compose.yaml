@@ -2,13 +2,17 @@ version: "3"
 
 services:
 
-  postgres-db:
-    image: postgres:11-alpine
-#    image: mysql:8.0.11
+  db:
+    image: mysql:8.0.11
     restart: always
     ports:
-      - "5433:5432"
+      - "3307:3306"
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: db
+
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: db

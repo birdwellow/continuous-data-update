@@ -4,8 +4,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class SimPocApplication
+class UpdateNodeApplication
 
 fun main(args: Array<String>) {
-    runApplication<SimPocApplication>(*args)
+    runApplication<UpdateNodeApplication>(*args)
 }
