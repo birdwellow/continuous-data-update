@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/poc-simulation-timer-api
+    username: private
+    password: abcd
+
+  jpa.hibernate.ddl-auto: create-drop
+

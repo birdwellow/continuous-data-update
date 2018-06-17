@@ -1,0 +1,71 @@
+package net.fvogel.simpoc.logic
+
+import jdk.nashorn.internal.runtime.regexp.joni.Config.log
+import net.fvogel.simpoc.model.Facility
+import net.fvogel.simpoc.persistence.FacilityRepository
+import org.hibernate.SessionFactory
+import org.springframework.stereotype.Component
+import javax.persistence.EntityManagerFactory
+
+@Component
+class FacilityManager (val entityManagerFactory: EntityManagerFactory,
+                       val facilityRepository: FacilityRepository) {
+
+    internal var sessionFactory: SessionFactory = entityManagerFactory.unwrap(SessionFactory::class.java)
+
+    val facilities: List<Facility>
+        get() = facilityRepository.findAll()
+
+    fun update() {
+        val before = System.currentTimeMillis()
+        val facilities = facilityRepository.findAll() as List<Facility>
+        for (facility in facilities) {
+            update(facility)
+        }
+
+        //        updateComplete(facilities);
+        updateBatchStateless(facilities)
+
+        val diff = System.currentTimeMillis() - before
+        log.printf("Updated %d facilities, took %d ms", facilities.size, diff)
+        println()
+    }
+
+    private fun updateComplete(facilities: List<Facility>) {
+        facilityRepository.saveAll(facilities)
+    }
+
+    private fun updateBatchStateless(facilities: List<Facility>) {
+        val session = sessionFactory.openStatelessSession()
+        val tx = session.beginTransaction()
+
+        for (facility in facilities) {
+            session.update(facility)
+        }
+
+        tx.commit()
+        session.close()
+    }
+
+    private fun update(facility: Facility) {
+        val now = System.currentTimeMillis()
+        val diff = now - facility.lastUpdate
+        facility.lastUpdate = now
+
+        val newGas = facility.gasFactories * diff / 1000 * RATE_PER_SECOND_GAS
+        val newLiquids = facility.liquidsFactories * diff / 1000 * RATE_PER_SECOND_LIQUIDS
+        val newSolids = facility.solidsFactories * diff / 1000 * RATE_PER_SECOND_SOLIDS
+
+        facility.gas = (facility.gas + newGas)
+        facility.liquids = (facility.liquids + newLiquids)
+        facility.solids = (facility.solids + newSolids)
+    }
+
+    companion object {
+
+        private val RATE_PER_SECOND_GAS = 1.3f
+        private val RATE_PER_SECOND_LIQUIDS = 0.9f
+        private val RATE_PER_SECOND_SOLIDS = 0.7f
+    }
+
+}
