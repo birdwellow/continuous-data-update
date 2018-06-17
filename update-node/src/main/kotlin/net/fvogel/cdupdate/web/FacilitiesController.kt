@@ -1,8 +1,8 @@
-package net.fvogel.simpoc.web
+package net.fvogel.cdupdate.web
 
-import net.fvogel.simpoc.logic.FacilityManager
-import net.fvogel.simpoc.model.Facility
-import net.fvogel.simpoc.tasking.SchedulingManager
+import net.fvogel.cdupdate.logic.FacilityManager
+import net.fvogel.cdupdate.model.Facility
+import net.fvogel.cdupdate.tasking.SchedulingManager
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController

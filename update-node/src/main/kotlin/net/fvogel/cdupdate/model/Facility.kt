@@ -1,4 +1,4 @@
-package net.fvogel.simpoc.model
+package net.fvogel.cdupdate.model
 
 
 import javax.persistence.Entity

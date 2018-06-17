@@ -1,8 +1,7 @@
-package net.fvogel.simpoc.lifecycle
+package net.fvogel.cdupdate.lifecycle
 
-import net.fvogel.simpoc.logic.FacilityManager
-import net.fvogel.simpoc.persistence.FacilityRepository
-import net.fvogel.simpoc.tasking.SchedulingManager
+import net.fvogel.cdupdate.persistence.FacilityRepository
+import net.fvogel.cdupdate.tasking.SchedulingManager
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct

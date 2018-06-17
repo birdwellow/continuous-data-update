@@ -1,6 +1,6 @@
-package net.fvogel.simpoc.lifecycle
+package net.fvogel.cdupdate.lifecycle
 
-import net.fvogel.simpoc.model.Facility
+import net.fvogel.cdupdate.model.Facility
 import java.util.*
 
 class FacilityFactory {

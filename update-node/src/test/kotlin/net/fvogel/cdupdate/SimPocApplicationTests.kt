@@ -1,4 +1,4 @@
-package net.fvogel.simpoc
+package net.fvogel.cdupdate
 
 import org.junit.Test
 import org.junit.runner.RunWith

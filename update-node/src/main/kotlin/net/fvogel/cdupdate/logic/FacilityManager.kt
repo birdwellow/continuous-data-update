@@ -1,8 +1,8 @@
-package net.fvogel.simpoc.logic
+package net.fvogel.cdupdate.logic
 
 import jdk.nashorn.internal.runtime.regexp.joni.Config.log
-import net.fvogel.simpoc.model.Facility
-import net.fvogel.simpoc.persistence.FacilityRepository
+import net.fvogel.cdupdate.model.Facility
+import net.fvogel.cdupdate.persistence.FacilityRepository
 import org.hibernate.SessionFactory
 import org.springframework.stereotype.Component
 import javax.persistence.EntityManagerFactory

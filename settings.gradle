@@ -1,3 +1,3 @@
-rootProject.name = 'sim-poc'
+rootProject.name = 'continuous-data-update'
 
-include 'simnode'
+include 'update-node'
