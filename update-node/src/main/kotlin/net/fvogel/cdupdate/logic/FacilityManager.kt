@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component
 import javax.persistence.EntityManagerFactory
 
 @Component
-class FacilityManager (val entityManagerFactory: EntityManagerFactory,
-                       val facilityRepository: FacilityRepository) {
+class FacilityManager(val entityManagerFactory: EntityManagerFactory,
+                      val facilityRepository: FacilityRepository) {
 
     internal var sessionFactory: SessionFactory = entityManagerFactory.unwrap(SessionFactory::class.java)
 

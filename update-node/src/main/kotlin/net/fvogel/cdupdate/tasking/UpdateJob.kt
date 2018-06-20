@@ -1,11 +1,10 @@
 package net.fvogel.cdupdate.tasking
 
+import net.fvogel.cdupdate.logic.FacilityManager
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException
 import org.quartz.SchedulerException
-
-import net.fvogel.cdupdate.logic.FacilityManager
 
 class UpdateJob : Job {
 

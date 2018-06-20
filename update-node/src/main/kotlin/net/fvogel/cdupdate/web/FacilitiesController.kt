@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/facilities")
 class FacilitiesController(val schedulingManager: SchedulingManager,
-                           val facilityManager: FacilityManager ) {
+                           val facilityManager: FacilityManager) {
 
     @GetMapping("/")
-    fun facilities() : List<Facility> {
+    fun facilities(): List<Facility> {
         return facilityManager.facilities;
     }
 
