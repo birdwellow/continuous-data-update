@@ -1,6 +1,6 @@
 package net.fvogel.cdupdate.web
 
-import net.fvogel.cdupdate.logic.FacilityManager
+import net.fvogel.cdupdate.update.common.FacilityManager
 import net.fvogel.cdupdate.model.Facility
 import net.fvogel.cdupdate.tasking.SchedulingManager
 import org.springframework.web.bind.annotation.GetMapping
@@ -14,7 +14,7 @@ class FacilitiesController(val schedulingManager: SchedulingManager,
 
     @GetMapping("/")
     fun facilities(): List<Facility> {
-        return facilityManager.facilities;
+        return facilityManager.getFacilities();
     }
 
     @GetMapping("/toggle")

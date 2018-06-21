@@ -1,6 +1,6 @@
 package net.fvogel.cdupdate.tasking
 
-import net.fvogel.cdupdate.logic.FacilityManager
+import net.fvogel.cdupdate.update.common.FacilityManager
 import org.quartz.Job
 import org.quartz.JobExecutionContext
 import org.quartz.JobExecutionException

@@ -1,7 +1,7 @@
 package net.fvogel.cdupdate.tasking
 
 import jdk.nashorn.internal.runtime.regexp.joni.Config.log
-import net.fvogel.cdupdate.logic.FacilityManager
+import net.fvogel.cdupdate.update.common.FacilityManager
 import org.quartz.*
 import org.quartz.impl.StdSchedulerFactory
 import org.springframework.beans.factory.annotation.Autowired

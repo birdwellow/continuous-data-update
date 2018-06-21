@@ -1,22 +1,28 @@
-package net.fvogel.cdupdate.logic
+package net.fvogel.cdupdate.update.springdata
 
 import jdk.nashorn.internal.runtime.regexp.joni.Config.log
 import net.fvogel.cdupdate.model.Facility
-import net.fvogel.cdupdate.persistence.FacilityRepository
+import net.fvogel.cdupdate.update.common.FacilityManager
+import net.fvogel.cdupdate.update.common.FacilityRepository
 import org.hibernate.SessionFactory
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
+import java.sql.Timestamp
+import java.time.Instant
 import javax.persistence.EntityManagerFactory
 
 @Component
-class FacilityManager(val entityManagerFactory: EntityManagerFactory,
-                      val facilityRepository: FacilityRepository) {
+@Profile("springdata")
+class SpringDataFacilityManager (val entityManagerFactory: EntityManagerFactory,
+                                val facilityRepository: FacilityRepository) : FacilityManager {
 
     internal var sessionFactory: SessionFactory = entityManagerFactory.unwrap(SessionFactory::class.java)
 
-    val facilities: List<Facility>
-        get() = facilityRepository.findAll()
+    override fun getFacilities(): List<Facility> {
+        return facilityRepository.findAll()
+    }
 
-    fun update() {
+    override fun update() {
         val before = System.currentTimeMillis()
         val facilities = facilityRepository.findAll() as List<Facility>
         for (facility in facilities) {
@@ -24,7 +30,7 @@ class FacilityManager(val entityManagerFactory: EntityManagerFactory,
         }
 
         //        updateComplete(facilities);
-        updateBatchStateless(facilities)
+        updateOneByOneStateless(facilities)
 
         val diff = System.currentTimeMillis() - before
         log.printf("Updated %d facilities, took %d ms", facilities.size, diff)
@@ -35,7 +41,7 @@ class FacilityManager(val entityManagerFactory: EntityManagerFactory,
         facilityRepository.saveAll(facilities)
     }
 
-    private fun updateBatchStateless(facilities: List<Facility>) {
+    private fun updateOneByOneStateless(facilities: List<Facility>) {
         val session = sessionFactory.openStatelessSession()
         val tx = session.beginTransaction()
 
@@ -48,9 +54,9 @@ class FacilityManager(val entityManagerFactory: EntityManagerFactory,
     }
 
     private fun update(facility: Facility) {
-        val now = System.currentTimeMillis()
-        val diff = now - facility.lastUpdate
-        facility.lastUpdate = now
+        val now = System.nanoTime()
+        val diff = now - facility.lastUpdate.nanos
+        facility.lastUpdate = Timestamp.from(Instant.now())
 
         val newGas = facility.gasFactories * diff / 1000 * RATE_PER_SECOND_GAS
         val newLiquids = facility.liquidsFactories * diff / 1000 * RATE_PER_SECOND_LIQUIDS
@@ -62,7 +68,6 @@ class FacilityManager(val entityManagerFactory: EntityManagerFactory,
     }
 
     companion object {
-
         private val RATE_PER_SECOND_GAS = 1.3f
         private val RATE_PER_SECOND_LIQUIDS = 0.9f
         private val RATE_PER_SECOND_SOLIDS = 0.7f

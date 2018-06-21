@@ -1,6 +1,8 @@
 package net.fvogel.cdupdate.model
 
 
+import java.sql.Timestamp
+import java.time.Instant
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -13,7 +15,8 @@ data class Facility(
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long? = null,
 
-        var lastUpdate: Long = System.currentTimeMillis(),
+        var lastUpdate: Timestamp = Timestamp.from(Instant.now()),
+//        var lastUpdate: Long = System.currentTimeMillis(),
 
         var gas: Float = 0.toFloat(),
         var gasFactories: Int = 0,
