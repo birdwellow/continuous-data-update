@@ -7,6 +7,7 @@ import net.fvogel.cdupdate.update.common.FacilityRepository
 import org.hibernate.SessionFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
+import java.sql.Date
 import java.sql.Timestamp
 import java.time.Instant
 import javax.persistence.EntityManagerFactory
@@ -55,7 +56,8 @@ class SpringDataFacilityManager (val entityManagerFactory: EntityManagerFactory,
 
     private fun update(facility: Facility) {
         val now = System.nanoTime()
-        val diff = now - facility.lastUpdate.nanos
+        val diff = now - facility.lastUpdate.time
+//        facility.lastUpdate = Date.valueOf("")
         facility.lastUpdate = Timestamp.from(Instant.now())
 
         val newGas = facility.gasFactories * diff / 1000 * RATE_PER_SECOND_GAS

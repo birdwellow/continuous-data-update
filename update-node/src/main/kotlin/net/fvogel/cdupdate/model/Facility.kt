@@ -1,12 +1,8 @@
 package net.fvogel.cdupdate.model
 
 
-import java.sql.Timestamp
-import java.time.Instant
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import java.util.*
+import javax.persistence.*
 
 @Entity
 data class Facility(
@@ -15,8 +11,13 @@ data class Facility(
         @GeneratedValue(strategy = GenerationType.AUTO)
         val id: Long? = null,
 
-        var lastUpdate: Timestamp = Timestamp.from(Instant.now()),
-//        var lastUpdate: Long = System.currentTimeMillis(),
+//        @Basic
+//        var lastUpdate: Timestamp = Timestamp.from(Instant.now()),
+
+        @Basic
+        @Temporal(TemporalType.TIMESTAMP)
+//        @Column(columnDefinition = "timestamp with time zone")
+        var lastUpdate: Date = Date(),
 
         var gas: Float = 0.toFloat(),
         var gasFactories: Int = 0,
